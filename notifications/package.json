@@ -1,0 +1,8 @@
+{
+  "name": "notification-demo",
+  "version": "1.1.0",
+  "main": "main.js",
+  "dependencies": {
+    "node-notifier": "^10.0.1"
+  }
+}
