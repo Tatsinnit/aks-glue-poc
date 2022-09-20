@@ -44,3 +44,11 @@ body {
 .file.focus .icon {
   -webkit-filter: invert(20%);
 }
+
+.aks-icon {
+  background: url('./images/aks-icon.png');
+  height: 30px;
+  width: 40px;
+  display: block;
+  /* Other styles here */
+}

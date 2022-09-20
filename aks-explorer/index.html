@@ -14,17 +14,10 @@
     <ul class="nav nav-list" id="sidebar">
       <li class="nav-header">AKS Cluster explorer</li>
       <li class="active">
-        <a href="#" nw-path="~/"><i class="icon-white icon-home"></i> Cluster 1</a>
-      </li>
-      <li>
-        <a href="#" ><i class="icon-book"></i> Cluster 2</a>
-      </li>
-      <li>
-        <a href="#" ><i class="icon-picture"></i> Cluster 3</a>
+        <a href="#"><i id="currentcluster"></i></a>
       </li>
       <li class="divider"></li>
-      <li><a href="#" nw-call="about" onclick="App.about()"><i class="icon-flag"></i> About</a></li>
-    </ul>
+      </ul>
   </div>
 
   <div style="float: left; position: absolute; left: 210px; right: 0; top: 0; bottom: 50px">
@@ -33,8 +26,15 @@
     </div>
     <div class="row" style="background: #FFF; -webkit-border-radius: 2px; margin: -5px 1px 0 -19px; height: 100%; overflow: auto">
       <ul style="margin: 5px;" id="files"></ul>
-      <button>Run Some tool</button>
+      <button id="toolButton">Troubleshoot ACR connection issue on specific AKS node.</button>
     </div>
+
+    <form>
+      <input type="text" autofocus />
+    </form>
+    <div id="responses"></div>
+    <script src="./app.js"></script>
+
   </div>
 </div>
 </body>
