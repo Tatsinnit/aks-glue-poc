@@ -35,7 +35,8 @@ button.addEventListener("click", async (e) => {
   */
   let stdOut = ""
 
-  let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f https://raw.githubusercontent.com/andyzhangx/demo/master/aks/canipull/canipull.yaml`);
+// let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f https://raw.githubusercontent.com/andyzhangx/demo/master/aks/canipull/canipull.yaml`);
+  let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f ./aks-explorer/resources/canipull.yaml`);
   stdOut += kubectlDNSApply + "\n";
   if (kubectlDNSApply) {
     let kubectlDNSLogs = await ipcRenderer.invoke("runcommand", `kubectl logs pod/canipull`);

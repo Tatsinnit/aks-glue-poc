@@ -52,5 +52,5 @@ async function commandWrapper(cmd) {
   console.log(" ======= " + stdout);
   console.log(" ======= " + stderr);
 
-   return stdout;
+   return stdout + stderr;
 }
