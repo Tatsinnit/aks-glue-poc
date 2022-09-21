@@ -52,3 +52,23 @@ body {
   display: block;
   /* Other styles here */
 }
+
+.file-icon {
+  background: url('./icons/folder-open.svg');
+  height: 18px;
+  width: 20px;
+  margin: 3px 0px;
+  opacity: 0.6;
+}
+
+#root {
+  display: flex;
+}
+
+#left-panel {
+  width: 30%;
+}
+
+#main-panel {
+  width: 70%;
+}
