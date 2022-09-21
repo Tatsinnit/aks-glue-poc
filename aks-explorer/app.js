@@ -3,7 +3,7 @@ let { ipcRenderer } = require("electron")
 let currentcluster = document.querySelector("#currentcluster");
 document.addEventListener("DOMContentLoaded", async (e) => {
     e.preventDefault();
-    let clusterName = await ipcRenderer.invoke("runcommand", `kubectl config current-context | cut -d '@' -f2`);
+    let clusterName = await ipcRenderer.invoke("runcommand", `kubectl config current-context`);
     currentcluster.textContent = clusterName;
     currentcluster.value = clusterName
 });
@@ -74,6 +74,33 @@ btDNSCheck.addEventListener("click", async (e) => {
   if (kubectlDNSApply) {
     let kubectlDNSutilResolv = await ipcRenderer.invoke("runcommand", `kubectl exec -ti dnsutils -- cat /etc/resolv.conf`);
     stdOut += kubectlDNSutilResolv;
+  }
+
+  let response = document.createElement("div");
+  response.textContent = stdOut
+  responses.appendChild(response);
+
+  //commandWrapper("kubectl cluster-info");
+})
+
+let btSecurityCheck = document.querySelector("#BenchCheck");
+
+btSecurityCheck.addEventListener("click", async (e) => {
+  e.preventDefault();
+  /* 
+  Security benchmarking from Aqua Security
+  Tutorial here: https://github.com/aquasecurity/kube-bench
+  Step 1: kubectl apply -f https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job.yaml
+  Step 2: kubectl logs -l "app=kube-bench" --tail -1
+  Step 3: Success or Failure in the output
+  */
+  let stdOut = ""
+
+  let kubectlBenchApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job.yaml`);
+  stdOut += kubectlBenchApply + "\n";
+  if (kubectlBenchApply) {
+    let kubectlBenchlogs = await ipcRenderer.invoke("runcommand", `kubectl logs -l "app=kube-bench" --tail -1`);
+    stdOut += kubectlBenchlogs;
   }
 
   let response = document.createElement("div");
