@@ -109,3 +109,20 @@ btSecurityCheck.addEventListener("click", async (e) => {
 
   //commandWrapper("kubectl cluster-info");
 })
+
+let btMetricsCheck = document.querySelector("#MetricsCheck");
+
+btMetricsCheck.addEventListener("click", async (e) => {
+  e.preventDefault();
+  /*
+    kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes | jq
+  */
+
+  let stdOut = ""
+  let kubectlMetricsApply = await ipcRenderer.invoke("runcommand", `kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes | jq`);
+  stdOut += kubectlMetricsApply + "\n";
+  let response = document.createElement("div");
+  response.textContent = stdOut
+  responses.appendChild(response);
+
+})
