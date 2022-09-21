@@ -22,7 +22,7 @@ form.addEventListener("submit", async (e) => {
   responses.appendChild(response)
 })
 
-let button = document.querySelector("#toolButton");
+let button = document.querySelector("#ACRPull");
 
 button.addEventListener("click", async (e) => {
   e.preventDefault();
@@ -50,4 +50,35 @@ button.addEventListener("click", async (e) => {
   //commandWrapper("kubectl cluster-info");
 })
 
+let btDNSCheck = document.querySelector("#DNSCheck");
 
+btDNSCheck.addEventListener("click", async (e) => {
+  e.preventDefault();
+  let stdOut = ""
+
+  let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml`);
+
+  stdOut += kubectlDNSApply + "\n";
+  if (kubectlDNSApply) {
+    let kubectldnsUtilPod = await ipcRenderer.invoke("runcommand", `kubectl get pods dnsutils`);
+    stdOut += kubectldnsUtilPod;
+  }
+
+  stdOut += kubectlDNSApply + "\n";
+  if (kubectlDNSApply) {
+    let kubectlDNSutilExec = await ipcRenderer.invoke("runcommand", `kubectl exec -i -t dnsutils -- nslookup kubernetes.default`);
+    stdOut += kubectlDNSutilExec;
+  }
+
+  stdOut += kubectlDNSApply + "\n";
+  if (kubectlDNSApply) {
+    let kubectlDNSutilResolv = await ipcRenderer.invoke("runcommand", `kubectl exec -ti dnsutils -- cat /etc/resolv.conf`);
+    stdOut += kubectlDNSutilResolv;
+  }
+
+  let response = document.createElement("div");
+  response.textContent = stdOut
+  responses.appendChild(response);
+
+  //commandWrapper("kubectl cluster-info");
+})
