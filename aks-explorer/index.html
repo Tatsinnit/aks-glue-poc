@@ -36,6 +36,7 @@
           <option value="dns">DNS Resolution</option>
           <option value="security">Security Check</option>
           <option value="Metrics">Metrics Check</option>
+          <option value="Crictl">Crictl Check</option>
         </select>
       </div>
 
@@ -45,6 +46,7 @@
         <button id="DNSCheck" class="btn btn-secondary mb-2">Debugging DNS Resolution</button>
         <button id="BenchCheck" class="btn btn-secondary mb-2">Debugging Security Check</button>
         <button id="MetricsCheck" class="btn btn-secondary mb-2">Node Metrics Check</button>
+        <button id="CRICTLCheck" class="btn btn-secondary mb-2">Debugging Containers with Crictl</button>
 
         <Pre style="white-space: pre-wrap;"><div id="responses"></div></Pre>
       </div>
@@ -61,31 +63,42 @@
             var text = $(this).children("option:selected").text();
 
             if (text == "Select All") {
-              $('#ACRPull, #DNSCheck,#BenchCheck,#MetricsCheck').show();
+              $('#ACRPull, #DNSCheck,#BenchCheck,#MetricsCheck','#CRICTLCheck').show();
             }
             if (text == "Troubleshoot ACR") {
               $('#ACRPull').show();
               $('#DNSCheck').hide();
               $('#BenchCheck').hide();
               $('#MetricsCheck').hide();
+              $('#CRICTLCheck').hide();
             }
             if (text == "DNS Resolution") {
             $('#ACRPull').hide();
             $('#DNSCheck').show();
             $('#BenchCheck').hide();
             $('#MetricsCheck').hide();
+            $('#CRICTLCheck').hide();
             }
             if (text == "Security Check") {
             $('#ACRPull').hide();
             $('#DNSCheck').hide();
             $('#BenchCheck').show();
             $('#MetricsCheck').hide();
+            $('#CRICTLCheck').hide();
         }
         if (text == "Metrics Check") {
           $('#ACRPull').hide();
           $('#DNSCheck').hide();
           $('#BenchCheck').hide();
           $('#MetricsCheck').show();
+          $('#CRICTLCheck').hide();
+        }
+        if (text == "CriCtil Check") {
+          $('#ACRPull').hide();
+          $('#DNSCheck').hide();
+          $('#BenchCheck').hide();
+          $('#MetricsCheck').hide();
+          $('#CRICTLCheck').show();
         }
           });
         });

@@ -126,3 +126,31 @@ btMetricsCheck.addEventListener("click", async (e) => {
   responses.appendChild(response);
 
 })
+
+let crictlcheck = document.querySelector("#CRICTLCheck");
+
+crictlcheck.addEventListener("click", async (e) => {
+  e.preventDefault();
+  /* 
+  Troubleshoot containers with crictl.
+  Tutorial here: https://kubernetes.io/docs/tasks/debug/debug-cluster/crictl/
+  Step 1: kubectl apply -f ./aks-explorer/resources/crictlcommands.yaml
+  Step 2: kubectl logs -l app=crictldebug --tail -1
+  Step 3: Success or Failure in the output
+  */
+  let stdOut = ""
+
+// let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f https://raw.githubusercontent.com/andyzhangx/demo/master/aks/canipull/canipull.yaml`);
+  let kubectlcrictlApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f ./aks-explorer/resources/crictlcommands.yaml`);
+  stdOut += kubectlcrictlApply + "\n";
+  if (kubectlcrictlApply) {
+    let kubectlcrictlSLogs = await ipcRenderer.invoke("runcommand", `kubectl logs -l app=crictldebug --tail -1`);
+    stdOut += kubectlcrictlSLogs;
+  }
+
+  let response = document.createElement("div");
+  response.textContent = stdOut
+  responses.appendChild(response);
+
+  //commandWrapper("kubectl cluster-info");
+})

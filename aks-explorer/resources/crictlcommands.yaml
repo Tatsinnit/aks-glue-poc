@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: crictldebug
+  namespace: default
+  labels:
+    app: crictldebug
+spec:
+  selector:
+    matchLabels:
+      kubernetes.io/os: linux
+  template:
+    metadata:
+       labels:
+          kubernetes.io/os: linux
+          app: crictldebug
+    spec:
+      containers:
+      - image: mcr.microsoft.com/oss/nginx/nginx:1.13.12-alpine
+        imagePullPolicy: Always
+        name: crictldebug
+        resources: {}
+        volumeMounts:
+        - mountPath: /host
+          name: host-root
+        command: ["/bin/sh", "-c"]
+        args:
+          - chroot /host /bin/bash -c "printf \"\n\n\"; echo listing all containers in node $(hostname); printf \"\n\n\" ; crictl pods | head -n 15 ; printf \"\n\n\" ; echo listing all container images in node $(hostname); printf \"\n\n\"; crictl images | head -n 15; sleep infinity"
+      hostIPC: true
+      hostNetwork: true
+      hostPID: true
+      preemptionPolicy: PreemptLowerPriority
+      priority: 0      
+      volumes:
+      - hostPath:
+          path: /
+          type: ""
+        name: host-root
