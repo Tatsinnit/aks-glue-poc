@@ -63,7 +63,7 @@
             var text = $(this).children("option:selected").text();
 
             if (text == "Select All") {
-              $('#ACRPull, #DNSCheck,#BenchCheck,#MetricsCheck','#CRICTLCheck').show();
+              $('#ACRPull,#DNSCheck,#BenchCheck,#MetricsCheck,#CRICTLCheck').show();
             }
             if (text == "Troubleshoot ACR") {
               $('#ACRPull').show();
@@ -85,21 +85,21 @@
             $('#BenchCheck').show();
             $('#MetricsCheck').hide();
             $('#CRICTLCheck').hide();
-        }
-        if (text == "Metrics Check") {
-          $('#ACRPull').hide();
-          $('#DNSCheck').hide();
-          $('#BenchCheck').hide();
-          $('#MetricsCheck').show();
-          $('#CRICTLCheck').hide();
-        }
-        if (text == "CriCtil Check") {
-          $('#ACRPull').hide();
-          $('#DNSCheck').hide();
-          $('#BenchCheck').hide();
-          $('#MetricsCheck').hide();
-          $('#CRICTLCheck').show();
-        }
+            }
+            if (text == "Metrics Check") {
+              $('#ACRPull').hide();
+              $('#DNSCheck').hide();
+              $('#BenchCheck').hide();
+              $('#MetricsCheck').show();
+              $('#CRICTLCheck').hide();
+            }
+            if (text == "Crictl Check") {
+              $('#ACRPull').hide();
+              $('#DNSCheck').hide();
+              $('#BenchCheck').hide();
+              $('#MetricsCheck').hide();
+              $('#CRICTLCheck').show();
+            }
           });
         });
       </script>

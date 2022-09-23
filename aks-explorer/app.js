@@ -127,9 +127,9 @@ btMetricsCheck.addEventListener("click", async (e) => {
 
 })
 
-let crictlcheck = document.querySelector("#CRICTLCheck");
+let btcrictlcheck = document.querySelector("#CRICTLCheck");
 
-crictlcheck.addEventListener("click", async (e) => {
+btcrictlcheck.addEventListener("click", async (e) => {
   e.preventDefault();
   /* 
   Troubleshoot containers with crictl.
