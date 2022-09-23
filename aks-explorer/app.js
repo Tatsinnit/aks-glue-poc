@@ -1,11 +1,12 @@
 let { ipcRenderer } = require("electron")
+let DecompressZip = require('decompress-zip');
 
 let currentcluster = document.querySelector("#currentcluster");
 document.addEventListener("DOMContentLoaded", async (e) => {
-    e.preventDefault();
-    let clusterName = await ipcRenderer.invoke("runcommand", `kubectl config current-context`);
-    currentcluster.textContent = clusterName;
-    currentcluster.value = clusterName
+  e.preventDefault();
+  let clusterName = await ipcRenderer.invoke("runcommand", `kubectl config current-context`);
+  currentcluster.textContent = clusterName;
+  currentcluster.value = clusterName
 });
 
 let form = document.querySelector("form")
@@ -35,7 +36,7 @@ button.addEventListener("click", async (e) => {
   */
   let stdOut = ""
 
-// let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f https://raw.githubusercontent.com/andyzhangx/demo/master/aks/canipull/canipull.yaml`);
+  // let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f https://raw.githubusercontent.com/andyzhangx/demo/master/aks/canipull/canipull.yaml`);
   let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f ./aks-explorer/resources/canipull.yaml`);
   stdOut += kubectlDNSApply + "\n";
   if (kubectlDNSApply) {
@@ -140,7 +141,7 @@ btcrictlcheck.addEventListener("click", async (e) => {
   */
   let stdOut = ""
 
-// let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f https://raw.githubusercontent.com/andyzhangx/demo/master/aks/canipull/canipull.yaml`);
+  // let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f https://raw.githubusercontent.com/andyzhangx/demo/master/aks/canipull/canipull.yaml`);
   let kubectlcrictlApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f ./aks-explorer/resources/crictlcommands.yaml`);
   stdOut += kubectlcrictlApply + "\n";
   if (kubectlcrictlApply) {
@@ -153,4 +154,42 @@ btcrictlcheck.addEventListener("click", async (e) => {
   responses.appendChild(response);
 
   //commandWrapper("kubectl cluster-info");
+})
+
+let b2kButton = document.querySelector("#B2K");
+
+b2kButton.addEventListener("click", async (e) => {
+  e.preventDefault();
+  let stdOut = ""
+  let DESTINATION_PATH = "C:\\Users\\hsubramanian\\b2k"
+  let response = document.createElement("div");
+  response.textContent = "Downloading Bridge to Kubernetes..."
+  responses.appendChild(response);
+  let downloadBinaries = await ipcRenderer.invoke("runcommand", `curl.exe -LO https://bridgetokubernetes.azureedge.net/zip/1.0.20220816.2/lpk-win.zip`);
+  stdOut += downloadBinaries;
+  response.textContent = "Download completed"
+  response.textContent = "Unzipping the binaries.."
+//   // let unzipB2K = await ipcRenderer.invoke("runcommand", `Expand-Archive .\\lpk-win.zip`);
+//   let unzipper = new DecompressZip("lpk-win.zip");
+//   unzipper.extract({
+//     path: DESTINATION_PATH
+//   })
+//   // Add the error event listener
+//   unzipper.on('error', function (err) {
+//     console.log('Caught an error', err);
+//   });
+//   // Notify when everything is extracted
+// unzipper.on('extract', function (log) {
+//   console.log('Finished extracting', log);
+// });
+
+// // Notify "progress" of the decompressed files
+// unzipper.on('progress', function (fileIndex, fileCount) {
+//   console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+// });
+  // response.textContent = "Running B2K connect command"
+  // let b2kcmd = await ipcRenderer.invoke("runcommand", `C:\\Users\\hsubramanian\\Downloads\\b2k\\dsc.exe connect --service stats-api --local-port 3001 --namespace todo-app`);
+  response.textContent = "opening the service in vscode and debug it"
+  await ipcRenderer.invoke("runcommand", "code .")
+  responses.appendChild(response);
 })

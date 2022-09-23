@@ -1,5 +1,8 @@
 {
-  "name"    : "aks-explorer-demo",
-  "version" : "1.1.0",
-  "main"    : "main.js"
+  "name": "aks-explorer-demo",
+  "version": "1.1.0",
+  "main": "main.js",
+  "devDependencies": {
+    "electron-winstaller": "^5.0.0"
+  }
 }
