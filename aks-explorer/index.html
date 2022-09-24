@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>AKS Explorer - Stack Unstuck</title>
+  <title>AKS Explorer - AKS Glu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
@@ -38,6 +38,7 @@
           <option value="Metrics">Metrics Check</option>
           <option value="Crictl">Crictl Check</option>
           <option value="B2K">Debug service with B2K</option>
+          <option value="kubelet">Kubelet Errors Check</option>
         </select>
       </div>
 
@@ -49,6 +50,7 @@
         <button id="MetricsCheck" class="btn btn-secondary mb-2">Node Metrics Check</button>
         <button id="CRICTLCheck" class="btn btn-secondary mb-2">Debugging Containers with Crictl</button>
         <button id="B2K" class="btn btn-secondary mb-2">Debugging service with B2K</button>
+        <button id="KubeletErrorsCheck" class="btn btn-secondary mb-2">Kubelet Errors Check</button>
 
 
         <Pre style="white-space: pre-wrap;"><div id="responses"></div></Pre>
@@ -66,7 +68,7 @@
             var text = $(this).children("option:selected").text();
 
             if (text == "Select All") {
-              $('#ACRPull,#DNSCheck,#BenchCheck,#MetricsCheck,#CRICTLCheck,#B2K').show();
+              $('#ACRPull,#DNSCheck,#BenchCheck,#MetricsCheck,#CRICTLCheck,#B2K,#KubeletErrorsCheck').show();
             }
             if (text == "Troubleshoot ACR") {
               $('#ACRPull').show();
@@ -75,6 +77,7 @@
               $('#MetricsCheck').hide();
               $('#CRICTLCheck').hide();
               $('#B2K').hide();
+              $('#KubeletErrorsCheck').hide();
             }
             if (text == "DNS Resolution") {
               $('#ACRPull').hide();
@@ -83,6 +86,7 @@
               $('#MetricsCheck').hide();
               $('#CRICTLCheck').hide();
               $('#B2K').hide();
+              $('#KubeletErrorsCheck').hide();
             }
             if (text == "Security Check") {
               $('#ACRPull').hide();
@@ -91,6 +95,7 @@
               $('#MetricsCheck').hide();
               $('#CRICTLCheck').hide();
               $('#B2K').hide();
+              $('#KubeletErrorsCheck').hide();
             }
             if (text == "Metrics Check") {
               $('#ACRPull').hide();
@@ -99,6 +104,7 @@
               $('#MetricsCheck').show();
               $('#CRICTLCheck').hide();
               $('#B2K').hide();
+              $('#KubeletErrorsCheck').hide();
             }
             if (text == "Crictl Check") {
               $('#ACRPull').hide();
@@ -107,6 +113,7 @@
               $('#MetricsCheck').hide();
               $('#CRICTLCheck').show();
               $('#B2K').hide();
+              $('#KubeletErrorsCheck').hide();
             }
             if (text == "Debug service with B2K") {
               $('#ACRPull').hide();
@@ -115,6 +122,16 @@
               $('#MetricsCheck').hide();
               $('#CRICTLCheck').hide();
               $('#B2K').show();
+              $('#KubeletErrorsCheck').hide();
+            }
+            if (text == "Kubelet Errors Check") {
+              $('#ACRPull').hide();
+              $('#DNSCheck').hide();
+              $('#BenchCheck').hide();
+              $('#MetricsCheck').hide();
+              $('#CRICTLCheck').hide();
+              $('#B2K').hide();
+              $('#KubeletErrorsCheck').show();
             }
           });
         });

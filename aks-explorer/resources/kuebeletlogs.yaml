@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kubeleterrors
+  namespace: default
+  labels:
+    app: kubeleterrors
+spec:
+  selector:
+    matchLabels:
+      kubernetes.io/os: linux
+  template:
+    metadata:
+       labels:
+          kubernetes.io/os: linux
+          app: kubeleterrors
+    spec:
+      containers:
+      - image: mcr.microsoft.com/oss/nginx/nginx:1.13.12-alpine
+        imagePullPolicy: Always
+        name: kubeleterrors
+        resources: {}
+        volumeMounts:
+        - mountPath: /host
+          name: host-root
+        command: ["/bin/sh", "-c"]
+        args:
+          - chroot /host /bin/bash -c "printf \"\n\n\"; echo \"listing kubelet errors in node $(hostname)\"; printf \"\n\n\" ; journalctl -u kubelet -o cat | grep \^E | head -n 15; sleep infinity"
+      hostIPC: true
+      hostNetwork: true
+      hostPID: true
+      preemptionPolicy: PreemptLowerPriority
+      priority: 0      
+      volumes:
+      - hostPath:
+          path: /
+          type: ""
+        name: host-root

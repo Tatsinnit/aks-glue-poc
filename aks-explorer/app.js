@@ -1,5 +1,5 @@
 let { ipcRenderer } = require("electron")
-let DecompressZip = require('decompress-zip');
+//let DecompressZip = require('decompress-zip');
 
 let currentcluster = document.querySelector("#currentcluster");
 document.addEventListener("DOMContentLoaded", async (e) => {
@@ -192,4 +192,30 @@ b2kButton.addEventListener("click", async (e) => {
   response.textContent = "opening the service in vscode and debug it"
   await ipcRenderer.invoke("runcommand", "code .")
   responses.appendChild(response);
+})
+
+let btkubeletcheck = document.querySelector("#KubeletErrorsCheck");
+
+btkubeletcheck.addEventListener("click", async (e) => {
+  e.preventDefault();
+  /* 
+  Step 1: kubectl apply -f ./aks-explorer/resources/kubeletlogs.yaml
+  Step 2: kubectl logs -l app=kubeleterrors --tail -1
+  Step 3: Success or Failure in the output
+  */
+  let stdOut = ""
+
+  // let kubectlDNSApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f https://raw.githubusercontent.com/andyzhangx/demo/master/aks/canipull/canipull.yaml`);
+  let kubectlkubeletApply = await ipcRenderer.invoke("runcommand", `kubectl apply -f ./aks-explorer/resources/kuebeletlogs.yaml`);
+  stdOut += kubectlkubeletApply + "\n";
+  if (kubectlkubeletApply) {
+    let kubectlkubeletLogs = await ipcRenderer.invoke("runcommand", `kubectl logs -l app=kubeleterrors --tail -1`);
+    stdOut += kubectlkubeletLogs;
+  }
+
+  let response = document.createElement("div");
+  response.textContent = stdOut
+  responses.appendChild(response);
+
+  //commandWrapper("kubectl cluster-info");
 })
